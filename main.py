@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, url_for, render_template, send_file
 from excel_convert import convert
+import time
 
 
 app = Flask(__name__)
@@ -8,10 +9,16 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        file = request.files['file']
+        while(True):
+            try:
+                file = request.files['file']
+                break
+            except KeyError:
+                time.sleep(1)
         return send_file('result.dat', download_name=convert(file))
 
     return render_template('index.html')
+
 
 @app.route('/slsp/purchases/template')
 def purchase_template():
@@ -21,4 +28,3 @@ def purchase_template():
 
 if __name__ == '__main__':
     app.run(debug=True)
- 
