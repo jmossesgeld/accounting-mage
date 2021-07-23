@@ -13,7 +13,12 @@ def convert(file):
     RDO_CODE = f"{ws['B1'].value:0>3d}"
     PERIOD = datetime.date.strftime(ws['B2'].value, "%m/%d/%Y")
     CALENDAR = ws['B3'].value
-    TIN = f"{ws['B7'].value:0>9d}"
+
+    try:
+        TIN = f"{ws['B7'].value.replace('-','')}"
+    except AttributeError:
+        TIN = f"{ws['B7'].value:0>9d}"
+
     NAME = ws['B8'].value
     TRADE = ws['B12'].value
     ADDRESS1 = ws['B13'].value
@@ -35,7 +40,11 @@ def convert(file):
 
     # CONVERT AND FORMAT DATA
     def parse(line):
-        line[0] = f"{str(line[0]).replace('-','')}"
+        try:
+            line[0] = f"{str(line[0]).replace('-','')}"
+        except AttributeError:
+            line[0] = f"{str(line[0]):0>9d}"
+
         line[7] = f'{line[7]:.2f}'
         line[8] = f'{line[8]:.2f}'
         line[9] = f'{line[9]:.2f}'
