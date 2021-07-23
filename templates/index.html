@@ -2,7 +2,8 @@
 <body>
     <br>
     <div class="container-fluid">
-        <h1 class="text-center">SLSP-Purchases Excel Converter</h1><hr>
+        <h1 class="text-center">SLSP-Purchases Excel Converter</h1>
+        <h6 class="text-center">Seamlessly convert excel format to SLSP Relief DAT file for submission to BIR</h6><hr>
         <div class="text-center">
             <form method=POST enctype=multipart/form-data action="{{ url_for('home') }}">
                 <input type=file name=file onchange="submit()" id="files" class="hidden">
@@ -10,6 +11,8 @@
             </form>
             <p><a href="{{ url_for('purchase_template')}}">Get Template</a></p>
         </div>
+        <footer class="text-center warning"><em>Still always validate the DAT file offline to ensure error-free email validation</em></footer>
+
     </div>
 </body>
 {% include 'footer.html' %}
