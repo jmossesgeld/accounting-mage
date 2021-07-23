@@ -6,11 +6,11 @@ from openpyxl import load_workbook
 def convert(file):
 
     # LOAD EXCEL FILE
-    wb = load_workbook(file)
+    wb = load_workbook(file, data_only=True)
     ws = wb['MAIN']
 
     # GET FILER DATA
-    RDO_CODE = ws['B1'].value
+    RDO_CODE = f"{ws['B1'].value:0>3d}"
     PERIOD = datetime.date.strftime(ws['B2'].value, "%m/%d/%Y")
     CALENDAR = ws['B3'].value
     TIN = f"{ws['B7'].value:0>9d}"
@@ -20,15 +20,15 @@ def convert(file):
     ADDRESS2 = ws['B14'].value
 
     # GET FILER TOTALS
-    EXEMPT = ws['B18'].value
-    ZERO_RATED = ws['B19'].value
-    SERVICES = ws['B20'].value
-    CAPITAL_GOODS = ws['B21'].value
-    GOODS = ws['B22'].value
-    INPUT_VAT = ws['B23'].value
-    CREDITABLE = ws['B24'].value
-    NON_CREDITABLE = ws['B25'].value
-    NO_OF_RECORDS = ws['B26'].value
+    EXEMPT = f"{ws['B18'].value:.2f}"
+    ZERO_RATED = f"{ws['B19'].value:.2f}"
+    SERVICES = f"{ws['B20'].value:.2f}"
+    CAPITAL_GOODS = f"{ws['B21'].value:.2f}"
+    GOODS = f"{ws['B22'].value:.2f}"
+    INPUT_VAT = f"{ws['B23'].value:.2f}"
+    CREDITABLE = f"{ws['B24'].value:.2f}"
+    NON_CREDITABLE = f"{ws['B25'].value:.2f}"
+    NO_OF_RECORDS = f"{ws['B26'].value:.2f}"
 
     # READ DATA
     df = pd.read_excel(file, 'DATA').dropna()
