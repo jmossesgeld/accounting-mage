@@ -16,7 +16,8 @@ def home():
         #     except KeyError:
         #         time.sleep(1)
         file = request.files['file']
-        return send_file('result.dat', download_name=convert(file))
+        path = convert(file)
+        return send_file('result.DAT', as_attachment=True,attachment_filename=path)
 
     return render_template('index.html')
 
