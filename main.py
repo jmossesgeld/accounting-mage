@@ -9,12 +9,13 @@ app = Flask(__name__)
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
-        while(True):
-            try:
-                file = request.files['file']
-                break
-            except KeyError:
-                time.sleep(1)
+        # while(True):
+        #     try:
+        #         file = request.files['file']
+        #         break
+        #     except KeyError:
+        #         time.sleep(1)
+        file = request.files['file']
         return send_file('result.dat', download_name=convert(file))
 
     return render_template('index.html')

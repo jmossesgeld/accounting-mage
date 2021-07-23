@@ -2,3 +2,11 @@ input {
     margin: 20px;
     width: auto;
 }
+
+.hidden {
+    display: none;
+}
+
+label.btn {
+    margin: 20px;
+}
