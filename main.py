@@ -11,15 +11,13 @@ app = Flask(__name__)
 def home():
     if request.method == 'POST':
         file = request.files['file']
-        # path = os.path.join("uploads", file.filename)
         path = file.filename
         print(path)
         file.save(path)
         wb = load_workbook(path)
         ws = wb['MAIN']
         print(ws['A1'].value)
-        with open(file.filename,'w') as dat:
-            dat.write(ws['A1'].value)
+        return send_from_directory(directory='',filename=file.filename)
 
     return render_template('index.html')
 
