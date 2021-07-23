@@ -13,6 +13,12 @@ def home():
 
     return render_template('index.html')
 
+@app.route('/slsp/purchases/template')
+def purchase_template():
+    path = 'PURCHASES_TEMPLATE.xlsm'
+    return send_file(path, download_name=path)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
  

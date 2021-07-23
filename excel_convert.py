@@ -7,7 +7,7 @@ def convert(file):
 
     # LOAD EXCEL FILE
     wb = load_workbook(file, data_only=True)
-    ws = wb['MAIN']
+    ws = wb['PROFILE']
 
     # GET FILER DATA
     RDO_CODE = f"{ws['B1'].value:0>3d}"
