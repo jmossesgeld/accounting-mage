@@ -3,13 +3,11 @@
     <br>
     <div class="container-fluid">
         <h1 class="text-center">SLSP-Purchases Excel Converter</h1><hr>
-        <div class="row text-center">
+        <div class="text-center">
             <form method=POST enctype=multipart/form-data action="{{ url_for('home') }}">
                 <input type=file name=file>
-                <input type=submit>
+                <input type="submit">
             </form>
-            <br>
-            <br>
             <a href="{{ url_for('purchase_template')}}">Get Template</a>
         </div>
     </div>
