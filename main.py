@@ -1,8 +1,4 @@
-import os
-from flask import send_from_directory
-from flask import Flask, flash, request, redirect, url_for, render_template, send_file
-from werkzeug.utils import secure_filename
-from openpyxl import load_workbook
+from flask import Flask, request, redirect, url_for, render_template, send_file
 from excel_convert import convert
 
 
