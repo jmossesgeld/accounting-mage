@@ -1,11 +1,14 @@
 {% include 'header.html' %}
 <body>
-    <div>
-        <h1>SLSP Purchases Excel Converter</h1>
-        <form method=POST enctype=multipart/form-data action="{{ url_for('home') }}">
-            <input type=file name=file>
-            <input type=submit>
-        </form>
+    <br>
+    <div class="container-fluid">
+        <h1 class="text-center">SLSP-Purchases Excel Converter</h1><hr>
+        <div class="row text-center">
+            <form method=POST enctype=multipart/form-data action="{{ url_for('home') }}">
+                <input type=file name=file>
+                <input type=submit>
+            </form>
+        </div>
     </div>
 </body>
 {% include 'footer.html' %}

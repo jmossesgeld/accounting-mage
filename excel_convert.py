@@ -52,7 +52,7 @@ def convert(file):
         return f'D,P,"{line[0]}","{line[1]}",,,,"{line[5]}","{line[6]}",{line[7]},{line[8]},{line[9]},{line[10]},{line[11]},{line[12]},{TIN},{PERIOD}\n'
 
     with open('result.DAT', 'w') as dat:
-        dat.write('HEADER\n')
+        dat.write(f'H,P,"{TIN}","{NAME}","","","","{TRADE}","{ADDRESS1}","{ADDRESS2}",{EXEMPT},{ZERO_RATED},{SERVICES},{CAPITAL_GOODS},{GOODS},{INPUT_VAT},{CREDITABLE},{NON_CREDITABLE},{RDO_CODE},{PERIOD},{CALENDAR}\n')
         dat.writelines([parse(line) for line in df.values])
 
     dest_path = f'{TIN}P{PERIOD[:2]}{PERIOD[6:10]}.DAT'
