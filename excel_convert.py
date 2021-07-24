@@ -4,20 +4,35 @@ from openpyxl import load_workbook
 
 
 def convert(file):
-
     # LOAD EXCEL FILE
     wb = load_workbook(file, data_only=True)
     ws = wb.worksheets[0]
+    error_msgs = '<strong>Errors:</strong><br>'
+    has_error = False
 
     # GET FILER DATA
-    RDO_CODE = f"{ws['B1'].value:0>3d}"
-    PERIOD = datetime.date.strftime(ws['B2'].value, "%m/%d/%Y")
+    try:
+        RDO_CODE = f"{ws['B1'].value:0>3d}"
+    except Exception:
+        has_error = True
+        error_msgs += 'Please fill-up RDO Code<br>'
+
+    try:
+        PERIOD = datetime.date.strftime(ws['B2'].value, "%m/%d/%Y")
+    except Exception:
+        has_error = True
+        error_msgs += 'Please fill-up PERIOD<br>'
+
     CALENDAR = ws['B3'].value
 
     try:
         TIN = f"{ws['B7'].value.replace('-','')}"
     except AttributeError:
-        TIN = f"{ws['B7'].value:0>9d}"
+        try:
+            TIN = f"{ws['B7'].value:0>9d}"
+        except Exception:
+            has_error = True
+            error_msgs += 'Please fill-up Filer TIN<br>'
 
     NAME = ws['B8'].value
     TRADE = ws['B12'].value
@@ -65,9 +80,13 @@ def convert(file):
 
         return f'D,P,"{line[0]}","{line[1]}",,,,"{line[5]}","{line[6]}",{line[7]},{line[8]},{line[9]},{line[10]},{line[11]},{line[12]},{TIN},{PERIOD}\n'
 
-    with open('result.DAT', 'w') as dat:
-        dat.write(f'H,P,"{TIN}","{NAME}","","","","{TRADE}","{ADDRESS1}","{ADDRESS2}",{EXEMPT},{ZERO_RATED},{SERVICES},{CAPITAL_GOODS},{GOODS},{INPUT_VAT},{CREDITABLE},{NON_CREDITABLE},{RDO_CODE},{PERIOD},{CALENDAR}\n')
-        dat.writelines([parse(line) for line in df.values])
+    #RETURN RESULT
+    if has_error:
+        return error_msgs
+    else:
+        with open('result.DAT', 'w') as dat:
+            dat.write(f'H,P,"{TIN}","{NAME}","","","","{TRADE}","{ADDRESS1}","{ADDRESS2}",{EXEMPT},{ZERO_RATED},{SERVICES},{CAPITAL_GOODS},{GOODS},{INPUT_VAT},{CREDITABLE},{NON_CREDITABLE},{RDO_CODE},{PERIOD},{CALENDAR}\n')
+            dat.writelines([parse(line) for line in df.values])
 
-    dest_path = f'{TIN}P{PERIOD[:2]}{PERIOD[6:10]}.DAT'
-    return dest_path
+        dest_path = f'{TIN}P{PERIOD[:2]}{PERIOD[6:10]}.DAT'
+        return dest_path

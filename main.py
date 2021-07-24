@@ -16,8 +16,11 @@ def home():
         #         time.sleep(1)
         file = request.files['file']
         path = convert(file)
-        return send_file('result.DAT', as_attachment=True,attachment_filename=path)
-
+        print(path[:5])
+        if path[:5] == '<stro':
+            return render_template('index.html',error=path)
+        else:
+            return send_file('result.DAT', as_attachment=True, attachment_filename=path)
     return render_template('index.html')
 
 
@@ -28,4 +31,4 @@ def purchase_template():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
