@@ -36,7 +36,16 @@ def convert(file):
     NO_OF_RECORDS = f"{ws['B26'].value:.2f}"
 
     # READ DATA
-    df = pd.read_excel(file, 'DATA').dropna()
+    df = pd.read_excel(file, 'DATA').fillna(0)
+    print(df)
+    df['ADDRESS 1'] = df['ADDRESS 1'].replace(0,'-')
+    df['ADDRESS 2'] = df['ADDRESS 2'].replace(0,'-')
+    df['LAST NAME'] = df['LAST NAME'].replace(0,'-')
+    df['FIRST NAME'] = df['FIRST NAME'].replace(0,'-')
+    df['MIDDLE NAME'] = df['MIDDLE NAME'].replace(0,'-')
+    
+    
+
 
     # CONVERT AND FORMAT DATA
     def parse(line):
