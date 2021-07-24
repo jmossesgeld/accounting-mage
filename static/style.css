@@ -1,12 +1,21 @@
 input {
-    margin: 20px;
-    width: auto;
+  margin: 20px;
+  width: auto;
 }
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 label.btn {
-    margin: 20px;
+  margin: 20px;
+}
+
+#footer {
+  text-align: center;
+  position: fixed;
+  left: 0px;
+  bottom: 10px;
+  height: 30px;
+  width: 100%;
 }
