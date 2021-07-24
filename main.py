@@ -1,3 +1,9 @@
+from os import error
+from sys import exc_info
+import traceback
+from types import TracebackType
+from werkzeug.exceptions import HTTPException
+from flask import json
 from flask import Flask, request, redirect, url_for, render_template, send_file
 from excel_convert import convert
 
@@ -16,8 +22,11 @@ def home():
         #         time.sleep(1)
         file = request.files['file']
         path = convert(file)
-        return send_file('result.DAT', as_attachment=True,attachment_filename=path)
-
+        print(path[:5])
+        if path[:5] == '<stro':
+            return render_template('index.html',error=path)
+        else:
+            return send_file('result.DAT', as_attachment=True, attachment_filename=path)
     return render_template('index.html')
 
 
@@ -28,4 +37,4 @@ def purchase_template():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()

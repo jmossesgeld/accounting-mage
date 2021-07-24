@@ -19,3 +19,15 @@ label.btn {
   height: 30px;
   width: 100%;
 }
+
+#error {
+  color: brown;
+  justify-content: center;
+  display: flex;
+}
+
+#error p {
+  text-align: left;
+  display: inline;
+  width: auto;
+}
