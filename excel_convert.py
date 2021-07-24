@@ -11,7 +11,6 @@ def convert(file):
     has_error = False
 
     # GET FILER DATA
-
     try:
         RDO_CODE = f"{ws['B1'].value:0>3d}"
     except Exception:
@@ -81,6 +80,7 @@ def convert(file):
 
         return f'D,P,"{line[0]}","{line[1]}",,,,"{line[5]}","{line[6]}",{line[7]},{line[8]},{line[9]},{line[10]},{line[11]},{line[12]},{TIN},{PERIOD}\n'
 
+    #RETURN RESULT
     if has_error:
         return error_msgs
     else:

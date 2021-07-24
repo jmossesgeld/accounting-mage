@@ -1,9 +1,3 @@
-from os import error
-from sys import exc_info
-import traceback
-from types import TracebackType
-from werkzeug.exceptions import HTTPException
-from flask import json
 from flask import Flask, request, redirect, url_for, render_template, send_file
 from excel_convert import convert
 
