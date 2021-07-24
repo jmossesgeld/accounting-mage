@@ -1,6 +1,5 @@
 from flask import Flask, request, redirect, url_for, render_template, send_file
 from excel_convert import convert
-import time
 
 
 app = Flask(__name__)
