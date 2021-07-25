@@ -61,9 +61,11 @@ def convert(file):
     # CONVERT AND FORMAT DATA
     def parse(line):
         try:
-            line[0] = f"{str(line[0]).replace('-','')}"
+            line[0] = f"{line[0].replace('-','')}"
         except AttributeError:
-            line[0] = f"{str(line[0]):0>9d}"
+            line[0] = f"{line[0]:0>9d}"
+            print(line[0])
+            print(type(line[0]))
 
         line[7] = f'{line[7]:.2f}'
         line[8] = f'{line[8]:.2f}'
