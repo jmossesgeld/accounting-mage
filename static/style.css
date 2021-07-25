@@ -11,15 +11,6 @@ label.btn {
   margin: 20px;
 }
 
-#footer {
-  text-align: center;
-  position: fixed;
-  left: 0px;
-  bottom: 10px;
-  height: 30px;
-  width: 100%;
-}
-
 #error {
   color: brown;
   justify-content: center;

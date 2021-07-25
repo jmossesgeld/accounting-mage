@@ -1,0 +1,21 @@
+{% include 'header.html' %}
+<body>
+    <br />
+    <div class="container-fluid" style="margin-top: 10%; margin-bottom: 10%;">
+        <h1 class="text-center">SLSP-Purchases Excel Converter</h1>
+        <h6 class="text-center">Seamlessly convert excel format to SLSP Relief DAT file for submission to BIR</h6>
+        <hr />
+        <div class="text-center">
+            <form method=POST enctype=multipart/form-data action="{{ url_for('home') }}">
+            <input type="file" name="file" onchange="submit()" id="files" class="hidden" />
+            <label class="btn btn-success" for="files">Select Excel file</label>
+            <p><strong>First time user? </strong><a href="{{ url_for('purchase_template')}}">Get Template</a></p>
+        </div>
+
+        <div id='error'>
+            <p>{{error | safe }}</p>
+        </div>
+        <footer class="text-center warning"><em>Still always validate the DAT file offline to ensure error-free email validation</em></footer>
+    </div>
+    {% include 'footer.html' %}
+</body>

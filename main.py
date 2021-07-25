@@ -6,22 +6,16 @@ app = Flask(__name__)
 
 
 @app.route('/', methods=['GET', 'POST'])
-def home():
+def tools():
     if request.method == 'POST':
-        # while(True):
-        #     try:
-        #         file = request.files['file']
-        #         break
-        #     except KeyError:
-        #         time.sleep(1)
         file = request.files['file']
         path = convert(file)
         print(path[:5])
         if path[:5] == '<stro':
-            return render_template('index.html',error=path)
+            return render_template('tools.html',error=path)
         else:
             return send_file('result.DAT', as_attachment=True, attachment_filename=path)
-    return render_template('index.html')
+    return render_template('tools.html')
 
 
 @app.route('/slsp/purchases/template')
@@ -29,6 +23,9 @@ def purchase_template():
     path = 'PURCHASES_TEMPLATE.xlsm'
     return send_file(path, download_name=path)
 
+@app.route('/home')
+def home():
+    return render_template('index.html')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
