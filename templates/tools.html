@@ -6,7 +6,7 @@
         <h6 class="text-center">Seamlessly convert excel format to SLSP Relief DAT file for submission to BIR</h6>
         <hr />
         <div class="text-center">
-            <form method=POST enctype=multipart/form-data action="{{ url_for('home') }}">
+            <form method=POST enctype=multipart/form-data action="">
             <input type="file" name="file" onchange="submit()" id="files" class="hidden" />
             <label class="btn btn-success" for="files">Select Excel file</label>
             <p><strong>First time user? </strong><a href="{{ url_for('purchase_template')}}">Get Template</a></p>
