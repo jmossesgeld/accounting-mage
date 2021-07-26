@@ -5,7 +5,7 @@ from excel_convert import convert
 app = Flask(__name__)
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/tools', methods=['GET', 'POST'])
 def tools():
     if request.method == 'POST':
         file = request.files['file']
@@ -23,7 +23,7 @@ def purchase_template():
     path = 'PURCHASES_TEMPLATE.xlsm'
     return send_file(path, download_name=path)
 
-@app.route('/hero')
+@app.route('/')
 def home():
     return render_template('index.html')
 
