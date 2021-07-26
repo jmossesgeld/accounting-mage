@@ -19,8 +19,8 @@ def convert(file):
 
     try:
         ws['B2'].number_format = "m/dd/yyyy"
-        PERIOD = datetime.datetime.strptime(ws['B2'].value, "%m/%d/%Y").strftime("%m/%d/%Y")
-    except Exception:
+        PERIOD = datetime.datetime.strftime(ws['B2'].value,"%m/%d/%Y")
+    except ValueError:
         has_error = True
         error_msgs += 'Please fill-up PERIOD<br>'
 
