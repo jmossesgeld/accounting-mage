@@ -18,7 +18,8 @@ def convert(file):
         error_msgs += 'Please fill-up RDO Code<br>'
 
     try:
-        PERIOD = datetime.date.strftime(ws['B2'].value, "%m/%d/%Y")
+        ws['B2'].number_format = "m/dd/yyyy"
+        PERIOD = datetime.datetime.strptime(ws['B2'].value, "%m/%d/%Y").strftime("%m/%d/%Y")
     except Exception:
         has_error = True
         error_msgs += 'Please fill-up PERIOD<br>'
