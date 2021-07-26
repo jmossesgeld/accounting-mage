@@ -1,7 +1,10 @@
 import pandas as pd
 import datetime
 from openpyxl import load_workbook
+import os
 
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+dat_file = os.path.join(THIS_FOLDER, 'result.DAT')
 
 def convert(file):
     # LOAD EXCEL FILE
@@ -87,7 +90,7 @@ def convert(file):
     if has_error:
         return error_msgs
     else:
-        with open('result.DAT', 'w') as dat:
+        with open(dat_file, 'w') as dat:
             dat.write(f'H,P,"{TIN}","{NAME}","","","","{TRADE}","{ADDRESS1}","{ADDRESS2}",{EXEMPT},{ZERO_RATED},{SERVICES},{CAPITAL_GOODS},{GOODS},{INPUT_VAT},{CREDITABLE},{NON_CREDITABLE},{RDO_CODE},{PERIOD},{CALENDAR}\n')
             dat.writelines([parse(line) for line in df.values])
 
