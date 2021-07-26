@@ -10,7 +10,6 @@ def tools():
     if request.method == 'POST':
         file = request.files['file']
         path = convert(file)
-        print(path[:5])
         if path[:5] == '<stro':
             return render_template('tools.html',error=path)
         else:
