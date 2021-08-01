@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect, url_for, render_template, send_file
-import excel_convert
+from excel_convert import Converter
 
 app = Flask(__name__)
 
@@ -9,7 +9,8 @@ def slsp_convert():
     path = ""
     if request.method == 'POST':
         file = request.files['file']
-        path = excel_convert.slsp(file)
+        converter = Converter(file)
+        path = converter.slsp()
         if path[:5] != '<stro':
             return send_file('result.DAT', as_attachment=True, attachment_filename=path)
     return render_template('excel-convert.html', BIR_form='2550Q SLSP', version='RELIEF version: 2.3', template='PURCHASES_TEMPLATE.xlsm', error=path)
@@ -20,7 +21,8 @@ def qap_convert():
     path = ""
     if request.method == 'POST':
         file = request.files['file']
-        path = excel_convert.qap(file)
+        converter = Converter(file)
+        path = converter.qap()
         if path[:5] != '<stro':
             return send_file('result.DAT', as_attachment=True, attachment_filename=path)
     return render_template('excel-convert.html', BIR_form='1601EQ QAP', version='Alphalist version: 7.0', template='QAP_TEMPLATE.xlsm', error=path)
