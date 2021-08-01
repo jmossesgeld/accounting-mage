@@ -1,3 +1,16 @@
 .hidden {
   display: none;
 }
+
+h6 p {
+  display: block;
+  margin-top: 1rem;
+}
+
+
+#error {
+  display: flex;
+  margin:auto;
+  justify-content: center;
+  color: brown;
+}

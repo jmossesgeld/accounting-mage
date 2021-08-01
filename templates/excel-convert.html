@@ -2,14 +2,14 @@
 <body>
     <br />
     <div class="container-fluid" style="margin-top: 10%; margin-bottom: 10%;">
-        <h1 class="text-center">SLSP-Purchases Excel Converter</h1>
-        <h6 class="text-center">Seamlessly convert excel format to SLSP Relief DAT file for submission to BIR</h6>
+        <h1 class="text-center">{{ BIR_form }} Excel Converter</h1>
+        <h6 class="text-center">Seamlessly convert excel format to {{ BIR_form }} DAT file for BIR esubmission.<br><p><em>{{ version }}</em></p></h6>
         <hr />
         <div class="text-center">
             <form method=POST enctype=multipart/form-data action="">
             <input type="file" name="file" onchange="submit()" id="files" class="hidden" />
             <label class="btn btn-success" for="files" style="margin: 30px;">Select Excel file</label>
-            <p><strong>First time user? </strong><a href="{{ url_for('purchase_template')}}">Get Template</a></p>
+            <p><strong>First time user? </strong><a href="{{ url_for('download_template', path=template)}}">Get Template</a></p>
         </div>
 
         <div id='error'>
