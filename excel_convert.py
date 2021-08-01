@@ -145,5 +145,5 @@ class Converter:
 
                 dat.write(f'C1,1601EQ,{self.TIN},{BRANCH_CODE},{self.PERIOD},{TOTAL_PAYMENTS},{TOTAL_WITHHELD}\n')
 
-            dest_path = f'{self.TIN}P{self.PERIOD[:2]}{self.PERIOD[6:10]}.DAT'
+            dest_path = f'{self.TIN}{BRANCH_CODE}{self.PERIOD[:2]}{self.PERIOD[3:7]}1601EQ.DAT'
             return dest_path
