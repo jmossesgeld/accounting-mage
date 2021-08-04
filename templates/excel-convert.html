@@ -6,8 +6,8 @@
         <h6 class="text-center">Seamlessly convert excel format to {{ BIR_form }} DAT file for BIR esubmission.<br><p><em>{{ version }}</em></p></h6>
         <hr />
         <div class="text-center">
-            <form method=POST enctype=multipart/form-data action="">
-            <input type="file" name="file" onchange="submit()" id="files" class="hidden" />
+            <form method=POST enctype=multipart/form-data >
+            <input type="file" name="file" onchange="submit(); setTimeout(()=>window.location.reload(), 2000)" id="files" class="hidden" />
             <label class="btn btn-success" for="files" style="margin: 30px;">Select Excel file</label>
             <p><strong>First time user? </strong><a href="{{ url_for('download_template', path=template)}}">Get Template</a></p>
         </div>
@@ -17,5 +17,7 @@
         </div>
         <footer class="text-center warning"><em>Still always validate the DAT file offline to ensure error-free email validation</em></footer>
     </div>
+
+
     {% include 'footer.html' %}
 </body>
