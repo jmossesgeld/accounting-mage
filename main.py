@@ -30,7 +30,7 @@ def qap_convert():
 
 @app.route('/download-template/<path>')
 def download_template(path):
-    return send_file(path, as_attachment=True, attachment_filename=path)
+    return send_file(f"excel_templates/{path}", as_attachment=True, attachment_filename=path)
 
 
 @app.route('/tools', methods=['GET', 'POST'])

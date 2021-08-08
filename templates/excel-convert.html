@@ -12,12 +12,16 @@
             <p><strong>First time user? </strong><a href="{{ url_for('download_template', path=template)}}">Get Template</a></p>
         </div>
 
-        <div id='error'>
-            <p>{{error | safe }}</p>
+        <div >
+            <p id='error' class='hidden'>{{error | safe }}</p>
         </div>
         <footer class="text-center warning"><em>Still always validate the DAT file offline to ensure error-free email validation</em></footer>
     </div>
 
+    <script>
+        var errorNote = document.querySelector('#error.hidden');
+        errorNote.innerHTML && errorNote.classList.remove('hidden');
+    </script>
 
     {% include 'footer.html' %}
 </body>

@@ -13,7 +13,16 @@ h6 p {
   margin:auto;
   justify-content: center;
   color: brown;
+  border: solid;
   border-width: 2px;
   border-color: brown;
+  border-radius: 1rem;
+  width:fit-content;
+  padding:5px
 
+}
+
+#error.hidden {
+  display: none;
+  border: none;
 }
