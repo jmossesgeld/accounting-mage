@@ -11,7 +11,7 @@ def slsp_convert():
         file = request.files['file']
         converter = Converter(file)
         path = converter.slsp()
-        if path[:5] != '<stro':
+        if converter.has_error == False:
             return send_file('result.DAT', as_attachment=True, attachment_filename=path)
     return render_template('excel-convert.html', BIR_form='2550Q SLSP', version='RELIEF version: 2.3', template='PURCHASES_TEMPLATE.xlsm', error=path)
 
