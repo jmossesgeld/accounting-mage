@@ -33,16 +33,16 @@ for index, item in enumerate(account_list):
         mail_list = mails[0].decode().split()
         max_id = len(mail_list)
         last_id = int(prev_id)
+        max_count = min(max_id - last_id, 5)
 
-        if max_id - last_id > 5:
-            unread_mails = mail_list[-5:]
-        elif max_id - last_id == 0:
+        if max_count <= 0:
             print("All emails updated, no email to forward.")
             print("\nClosing selected mailbox....")
             imap_ssl.close()
             continue
         else:
-            unread_mails = mail_list[last_id:max_id]
+            unread_mails = mail_list[-max_count:]
+
 
         ############### Read each email #############
         for mail_id in unread_mails:
