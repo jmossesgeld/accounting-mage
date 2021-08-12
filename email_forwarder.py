@@ -2,8 +2,11 @@ import imaplib
 import email
 import csv
 import smtplib
+import os 
 
-with open('email_accounts.csv') as f:
+accounts_path = f"{os.path.dirname(os.path.realpath(__file__))}/email_accounts.csv"
+
+with open(accounts_path) as f:
     account_list = list(csv.reader(f))
 
 for index, item in enumerate(account_list):
@@ -71,7 +74,7 @@ for index, item in enumerate(account_list):
         account_list[index][-2] = max_id
 
 
-with open('email_accounts.csv', 'w', newline='') as f:
+with open(accounts_path, 'w', newline='') as f:
     print("Saving new account list...")
     csv_writer = csv.writer(f)
     csv_writer.writerows(account_list)
