@@ -23,7 +23,7 @@ def qap_convert():
         file = request.files['file']
         converter = Converter(file)
         path = converter.qap()
-        if path[:5] != '<stro':
+        if converter.has_error == False:
             return send_file('result.DAT', as_attachment=True, attachment_filename=path)
     return render_template('excel-convert.html', BIR_form='1601EQ QAP', version='Alphalist version: 7.0', template='QAP_TEMPLATE.xlsm', error=path)
 
