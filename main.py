@@ -1,12 +1,7 @@
 from flask import Flask, request, redirect, url_for, render_template, send_file, after_this_request
 from excel_convert import Converter
-from image_watermarking import apply_watermark
+from image_watermarking import convert_images
 
-import os
-import zipfile
-import io
-import pathlib
-from shutil import rmtree
 
 app = Flask(__name__)
 
@@ -45,37 +40,16 @@ def tools():
     return render_template('tools.html')
 
 
-@app.route('/projects/<project>', methods=['GET', 'POST'])
-def projects(project):
+@app.route('/projects/image-watermarking', methods=['GET', 'POST'])
+def image_watermarking():
     if request.method == 'POST':
         try:
             files = request.files.getlist('files[]')
-            try:
-                rmtree('UPLOADED_FILES')
-            except:
-                print("Folder not found.")
-            try:
-                os.makedirs('UPLOADED_FILES')
-            except:
-                print("Folder already exists.")
-            for file in files:
-                path = os.path.join('UPLOADED_FILES/', file.filename)
-                file.save(path)
-                apply_watermark(path, 'watermark.png')
-
-            base_path = pathlib.Path('UPLOADED_FILES')
-            data = io.BytesIO()
-            with zipfile.ZipFile(data, mode='w') as z:
-                for f_name in base_path.iterdir():
-                    z.write(f_name)
-            data.seek(0)
-
+            data = convert_images(files)
             return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='data.zip')
-
         except Exception as e:
             return render_template('error.html', error=e)
-
-    return render_template(f'projects/{project}.html', project_name=project)
+    return render_template(f'projects/image-watermarking.html', project_name='image-watermarking')
 
 
 @app.route('/')
