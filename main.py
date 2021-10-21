@@ -48,28 +48,32 @@ def tools():
 @app.route('/projects/<project>', methods=['GET', 'POST'])
 def projects(project):
     if request.method == 'POST':
-        files = request.files.getlist('files[]')
         try:
-            rmtree('UPLOADED_FILES')
-        except:
-            print("Folder not found.")
-        try:
-            os.makedirs('UPLOADED_FILES')
-        except:
-            print("Folder already exists.")
-        for file in files:
-            path = os.path.join('UPLOADED_FILES/', file.filename)
-            file.save(path)
-            apply_watermark(path, 'watermark.png')
+            files = request.files.getlist('files[]')
+            try:
+                rmtree('UPLOADED_FILES')
+            except:
+                print("Folder not found.")
+            try:
+                os.makedirs('UPLOADED_FILES')
+            except:
+                print("Folder already exists.")
+            for file in files:
+                path = os.path.join('UPLOADED_FILES/', file.filename)
+                file.save(path)
+                apply_watermark(path, 'watermark.png')
 
-        base_path = pathlib.Path('UPLOADED_FILES')
-        data = io.BytesIO()
-        with zipfile.ZipFile(data, mode='w') as z:
-            for f_name in base_path.iterdir():
-                z.write(f_name)
-        data.seek(0)
+            base_path = pathlib.Path('UPLOADED_FILES')
+            data = io.BytesIO()
+            with zipfile.ZipFile(data, mode='w') as z:
+                for f_name in base_path.iterdir():
+                    z.write(f_name)
+            data.seek(0)
 
-        return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='data.zip')
+            return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='data.zip')
+            
+        except Exception as e:
+            return render_template('error.html', error=e.with_traceback)
 
     return render_template(f'projects/{project}.html', project_name=project)
 
