@@ -71,9 +71,9 @@ def projects(project):
             data.seek(0)
 
             return send_file(data, mimetype='application/zip', as_attachment=True, attachment_filename='data.zip')
-            
+
         except Exception as e:
-            return render_template('error.html', error=e.with_traceback)
+            return render_template('error.html', error=e)
 
     return render_template(f'projects/{project}.html', project_name=project)
 
