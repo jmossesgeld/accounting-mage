@@ -1,0 +1,27 @@
+{% include 'header.html' %}
+<body>
+    <br />
+    <div class="container-fluid" style="margin-top: 10%; margin-bottom: 10%;">
+        <h1 class="text-center">Image Watermarking Software</h1>
+        <h6 class="text-center">Automatically apply watermark on your multiple images.<br><p><em>Version 1.0</em></p></h6>
+        <hr />
+        <div class="text-center">
+            <form method=POST enctype=multipart/form-data >
+            <input type="file" name="files[]" multiple='multiple' onchange="submit(); console.log(this.value); setTimeout(()=>window.location.reload(), 10000)" id="files" class="hidden" />
+            <label class="btn btn-success" for="files" style="margin: 30px;">Select Image Files</label>
+            <p><strong>First time user? </strong><a href="{{ url_for('download_template', path=template)}}">Get Template</a></p>
+        </div>
+
+        <div >
+            <p id='error' class='hidden'>{{error | safe }}</p>
+        </div>
+        <footer class="text-center warning"><em>Message our website if you have any concerns.</em></footer>
+    </div>
+
+    <script>
+        var errorNote = document.querySelector('#error.hidden');
+        errorNote.innerHTML && errorNote.classList.remove('hidden');
+    </script>
+
+    {% include 'footer.html' %}
+</body>
