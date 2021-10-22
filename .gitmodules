@@ -1,9 +1,6 @@
 [submodule "projects/excel_convert"]
 	path = projects/excel_convert
 	url = https://github.com/jmossesgeld/excel_convert
-[submodule "projects/email_forwarder"]
-	path = projects/email_forwarder
-	url = https://github.com/jmossesgeld/email_forwarder
 [submodule "projects/image_watermarking"]
 	path = projects/image_watermarking
 	url = https://github.com/jmossesgeld/image_watermarking
