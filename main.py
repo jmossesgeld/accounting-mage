@@ -1,7 +1,6 @@
 from flask import Flask, request, redirect, url_for, render_template, send_file, after_this_request
-from excel_convert import Converter
-from image_watermarking import convert_images
-
+from projects.excel_convert.excel_convert import Converter
+from projects.image_watermarking.image_watermarking import convert_images
 
 app = Flask(__name__)
 
