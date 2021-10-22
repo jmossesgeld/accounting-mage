@@ -7,7 +7,7 @@
         <hr />
         <div class="text-center">
             <form method=POST enctype=multipart/form-data >
-            <input type="file" name="files[]" multiple='multiple' onchange="submit(); console.log(this.value); setTimeout(()=>window.location.reload(), 10000)" id="files" class="hidden" />
+            <input type="file" name="files[]" multiple='multiple' onchange="submit(); console.log(this.value); setTimeout(()=>window.location.reload(), 30000)" id="files" class="hidden" />
             <label class="btn btn-success" for="files" style="margin: 30px;">Select Image Files</label>
             <p><strong>First time user? </strong><a href="{{ url_for('download_template', path=template)}}">Get Template</a></p>
         </div>
