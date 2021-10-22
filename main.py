@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, url_for, render_template, send_file, after_this_request
 from projects.excel_convert.excel_convert import Converter
 from projects.image_watermarking.image_watermarking import convert_images
+import os
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ def slsp_convert():
         converter = Converter(file)
         path = converter.slsp()
         if converter.has_error == False:
-            return send_file('result.DAT', as_attachment=True, attachment_filename=path)
+            return send_file('projects/excel_convert/result.DAT', as_attachment=True, attachment_filename=path)
     return render_template('projects/excel-convert.html', BIR_form='2550Q SLSP', version='RELIEF version: 2.3', template='PURCHASES_TEMPLATE.xlsm', error=path)
 
 
@@ -25,7 +26,7 @@ def qap_convert():
         converter = Converter(file)
         path = converter.qap()
         if converter.has_error == False:
-            return send_file('result.DAT', as_attachment=True, attachment_filename=path)
+            return send_file('projects/excel_convert/result.DAT', as_attachment=True, attachment_filename=path)
     return render_template('projects/excel-convert.html', BIR_form='1601EQ QAP', version='Alphalist version: 7.0', template='QAP_TEMPLATE.xlsm', error=path)
 
 

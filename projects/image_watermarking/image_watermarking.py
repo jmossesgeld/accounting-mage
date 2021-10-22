@@ -25,7 +25,7 @@ def convert_images(files):
     for file in files:
         path = os.path.join('UPLOADED_FILES/', file.filename)
         file.save(path)
-        apply_watermark(path, 'watermark.png')
+        apply_watermark(path, os.path.join(os.getcwd(), 'projects/image_watermarking/watermark.png'))
 
     base_path = pathlib.Path('UPLOADED_FILES')
     data = io.BytesIO()
