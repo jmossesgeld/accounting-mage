@@ -4,3 +4,6 @@
 [submodule "projects/image_watermarking"]
 	path = projects/image_watermarking
 	url = https://github.com/jmossesgeld/image_watermarking
+[submodule "projects/email_forwarder"]
+	path = projects/email_forwarder
+	url = https://github.com/jmossesgeld/email_forwarder
