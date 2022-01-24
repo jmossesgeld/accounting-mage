@@ -30,6 +30,18 @@ def qap_convert():
     return render_template('projects/excel-convert.html', BIR_form='1601EQ QAP', version='Alphalist version: 7.0', template='QAP_TEMPLATE.xlsm', error=path)
 
 
+@app.route('/compensation_convert', methods=['GET', 'POST'])
+def compensation_convert():
+    path = ""
+    if request.method == 'POST':
+        file = request.files['file']
+        converter = Converter(file)
+        path = converter.qap()
+        if converter.has_error == False:
+            return send_file('projects/excel_convert/result.DAT', as_attachment=True, attachment_filename=path)
+    return render_template('projects/excel-convert.html', BIR_form='1604C', version='Alphalist version: 7.0', template='1604C_TEMPLATE.xlsm', error=path)
+
+
 @app.route('/download-template/<path>')
 def download_template(path):
     return send_file(f"excel_templates/{path}", as_attachment=True, attachment_filename=path)

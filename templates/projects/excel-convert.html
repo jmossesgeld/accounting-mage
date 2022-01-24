@@ -1,27 +1,159 @@
 {% include 'header.html' %}
 <body>
-    <br />
-    <div class="container-fluid" style="margin-top: 10%; margin-bottom: 10%;">
-        <h1 class="text-center">{{ BIR_form }} Excel Converter</h1>
-        <h6 class="text-center">Seamlessly convert excel format to {{ BIR_form }} DAT file for BIR esubmission.<br><p><em>{{ version }}</em></p></h6>
-        <hr />
-        <div class="text-center">
-            <form method=POST enctype=multipart/form-data >
-            <input type="file" name="file" onchange="submit(); console.log(this.value); setTimeout(()=>window.location.reload(), 5000)" id="files" class="hidden" />
-            <label class="btn btn-success" for="files" style="margin: 30px;">Select Excel file</label>
-            <p><strong>First time user? </strong><a href="{{ url_for('download_template', path=template)}}">Get Template</a></p>
-        </div>
-
-        <div >
-            <p id='error' class='hidden'>{{error | safe }}</p>
-        </div>
-        <footer class="text-center warning"><em>Still always validate the DAT file offline to ensure error-free email validation</em></footer>
+  <br />
+  <div class="container-fluid" style="margin-top: 10%; margin-bottom: 10%">
+    <h1 class="text-center">{{ BIR_form }} Excel Converter</h1>
+    <h6 class="text-center">
+      Seamlessly convert excel format to {{ BIR_form }} DAT file for BIR esubmission.<br />
+      <p><em>{{ version }}</em></p>
+    </h6>
+    <hr />
+    <div class="text-center">
+      <form method=POST enctype=multipart/form-data >
+      <!-- CONDITIONAL INPUTS -->
+      {% if BIR_form=="1604C" %}
+      <input type="file" name="file" id="upload1604C" class="hidden" />
+      <label class="btn btn-success" for="upload1604C" style="margin: 30px"
+        >Select Excel file</label
+      >
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.min.js"></script>
+      {% else %}
+      <input
+        type="file"
+        name="file"
+        onchange="submit(); console.log(this.value); setTimeout(()=>window.location.reload(), 5000)"
+        id="files"
+        class="hidden"
+      />
+      <label class="btn btn-success" for="files" style="margin: 30px">Select Excel file</label>
+      {% endif %}
+      <p>
+        <strong>First time user? </strong
+        ><a href="{{ url_for('download_template', path=template)}}">Get Template</a>
+      </p>
     </div>
 
-    <script>
-        var errorNote = document.querySelector('#error.hidden');
-        errorNote.innerHTML && errorNote.classList.remove('hidden');
-    </script>
+    <div>
+      <p id="error" class="hidden">{{error | safe }}</p>
+    </div>
+    <footer class="text-center warning">
+      <em
+        >Still always validate the DAT file using the BIR program to ensure error-free email
+        validation</em
+      >
+    </footer>
+  </div>
 
-    {% include 'footer.html' %}
+  <script>
+    const errorNote = document.querySelector("#error.hidden");
+    errorNote.innerHTML && errorNote.classList.remove("hidden");
+
+    const fileToRead = document.getElementById("upload1604C");
+
+    function setFormat(cell, newFormat) {
+      cell.z = newFormat;
+      delete cell.w;
+      return XLSX.utils.format_cell(cell);
+    }
+
+    function addValues(value1, value2) {
+      const sum = parseFloat(value1) + parseFloat(value2);
+      return sum.toFixed(2);
+    }
+
+    function download(filename, text) {
+      const element = document.createElement("a");
+      element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+      element.setAttribute("download", filename);
+
+      element.style.display = "none";
+      document.body.appendChild(element);
+
+      element.click();
+
+      document.body.removeChild(element);
+    }
+
+    function convert1604C(wb) {
+      const wsEmployer = wb.Sheets["EMPLOYER"];
+      const wsEmployee = wb.Sheets["EMPLOYEES"];
+      const employerTIN = setFormat(wsEmployer.B3, "000000000");
+      const RDO = wsEmployer["B4"].v;
+      const year = wsEmployer["B5"].v;
+      const isAmended = wsEmployer["B6"].v;
+      const noOfSheetsAttached = wsEmployer["B7"].v;
+      const birForm = wsEmployer["B10"].v;
+
+      const employeesRange = XLSX.utils.decode_range(wsEmployee["!ref"]);
+      console.log(employeesRange);
+
+      const headerRow = `H1604C,${employerTIN},0000,12/31/${year},${isAmended},${noOfSheetsAttached},${RDO}`;
+
+      let employeeRows = "";
+      const totals = {};
+      for (let row = 3; row <= employeesRange.e.r; row++) {
+        const employee = {};
+        for (let col = employeesRange.s.c; col <= employeesRange.e.c; col++) {
+          const cell = wsEmployee[XLSX.utils.encode_cell({ r: row, c: col })];
+          if (cell) {
+            const key = XLSX.utils.encode_col(col);
+            employee[key] = cell.t === "n" && key !== "A" ? cell.v.toFixed(2) : cell.v;
+            if (cell.t === "n") {
+              totals[key] = totals[key] ? addValues(totals[key], employee[key]) : employee[key];
+            }
+          }
+        }
+
+        const line = `D1,1604C,${employerTIN},0000,12/31/${year},${row - 2},${employee.A},0000,"${
+          employee.B
+        }","${employee.C}","${employee.D}",${employee.E},${addValues(employee.X, employee.AB)},${
+          employee.S
+        },${employee.T},${employee.U},${employee.V},${employee.W},${employee.X},${employee.Y},${
+          employee.Z
+        },${employee.AA},${employee.AB},01/01/${year},12/31/${year},${addValues(
+          employee.N,
+          employee.R
+        )},${employee.I},${employee.J},${employee.K},${employee.L},${employee.M},${employee.N},${
+          employee.O
+        },${employee.P},${employee.Q},${employee.R},${employee.AC},${employee.AC},${employee.AD},${
+          employee.AF
+        },${employee.AE},${employee.AG},${employee.AH},${employee.AI},${employee.F},${employee.G},${
+          employee.H ?? ""
+        }\n`;
+        employeeRows += line;
+      }
+      const totalsRow = `C1,1604C,${employerTIN},0000,12/31/${year},${addValues(
+        totals.X,
+        totals.AB
+      )},${totals.S},${totals.T},${totals.U},${totals.V},${totals.W},${totals.X},${totals.Y},${
+        totals.Z
+      },${totals.AA},${totals.AB},${addValues(totals.N, totals.R)},${totals.I},${totals.J},${
+        totals.K
+      },${totals.L},${totals.M},${totals.N},${totals.O},${totals.P},${totals.Q},${totals.R},${
+        totals.AC
+      },${totals.AC},${totals.AD},${totals.AF},${totals.AE},${totals.AG},${totals.AH},${totals.AI}`;
+
+      download(
+        `${employerTIN}00001231${year}1604C.DAT`,
+        `${headerRow}\n${employeeRows}${totalsRow}`
+      );
+    }
+
+    function readFile() {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const data = new Uint8Array(e.target.result);
+        const wb = XLSX.read(data, { type: "array" });
+        convert1604C(wb);
+      };
+      reader.onerror = (ex) => {
+        console.log(ex);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+    fileToRead.addEventListener("change", readFile, false);
+  </script>
+
+  {% include 'footer.html' %}
 </body>
