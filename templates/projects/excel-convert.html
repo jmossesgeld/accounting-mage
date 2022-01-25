@@ -152,7 +152,9 @@
       };
       reader.readAsArrayBuffer(file);
     }
-    fileToRead.addEventListener("change", readFile, false);
+    if (fileToRead) {
+      fileToRead.addEventListener("change", readFile, false);
+    }
   </script>
 
   {% include 'footer.html' %}
