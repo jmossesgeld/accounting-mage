@@ -1,3 +1,4 @@
+import json
 from flask import Flask, jsonify, request, redirect, url_for, render_template, send_file, after_this_request
 from projects.excel_convert.excel_convert import Converter
 from projects.image_watermarking.image_watermarking import convert_images
@@ -72,7 +73,7 @@ def image_watermarking():
 def pcg_message():
     if request.method == 'POST':
         try:
-            data = jsonify(request.get_json())
+            data = json.load(request.get_json())
             message = data['message']
             number = data['number']
             return send_message(message, number).json()
