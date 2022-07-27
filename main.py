@@ -1,7 +1,8 @@
-from flask import Flask, request, redirect, url_for, render_template, send_file, after_this_request
+from flask import Flask, jsonify, request, redirect, url_for, render_template, send_file, after_this_request
 from projects.excel_convert.excel_convert import Converter
 from projects.image_watermarking.image_watermarking import convert_images
-import os
+from projects.pcg_gas.semaphore import send_message
+import json
 
 app = Flask(__name__)
 
@@ -63,6 +64,17 @@ def image_watermarking():
             return render_template('error.html', error=e)
     return render_template(f'projects/image-watermarking.html', project_name='image-watermarking')
 
+
+@app.route('/projects/pcg-gas', methods=['GET', 'POST'])
+def pcg_message():
+    if request.method == 'POST':
+        try:
+            data = jsonify(request.get_json())
+            message = data['message']
+            number = data['number']
+            return send_message(message, number).json()
+        except Exception as e:
+            return jsonify(e)
 
 @app.route('/')
 def home():
