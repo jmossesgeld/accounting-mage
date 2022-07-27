@@ -14,5 +14,5 @@ def send_message(message, number):
         ('message', message),
         ('number', number)
     )
-    path = 'https://semaphore.co/api/v4/messages?' + urllib.urlencode(params)
-    return requests.post(url=path, headers={'Allow-Control-Allow-Origin': '*'})
+    path = 'https://semaphore.co/api/v4/messages?' + urllib.parse.urlencode(params)
+    return requests.post(url=path, headers={'Allow-Control-Allow-Origin': '*'}).json()

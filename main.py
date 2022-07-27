@@ -73,10 +73,11 @@ def image_watermarking():
 def pcg_message():
     if request.method == 'POST':
         try:
-            data = json.load(request.get_json())
+            print(request)
+            data = request.get_json()
             message = data['message']
             number = data['number']
-            return send_message(message, number).json()
+            return jsonify(send_message(message, number))
         except Exception as e:
             return jsonify(e)
 
