@@ -2,9 +2,11 @@ from flask import Flask, jsonify, request, redirect, url_for, render_template, s
 from projects.excel_convert.excel_convert import Converter
 from projects.image_watermarking.image_watermarking import convert_images
 from projects.pcg_gas.semaphore import send_message
-import json
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route('/slsp-convert', methods=['GET', 'POST'])
@@ -66,6 +68,7 @@ def image_watermarking():
 
 
 @app.route('/projects/pcg-gas', methods=['GET', 'POST'])
+@cross_origin()
 def pcg_message():
     if request.method == 'POST':
         try:
